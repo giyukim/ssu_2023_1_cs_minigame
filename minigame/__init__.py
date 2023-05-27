@@ -49,4 +49,11 @@ game_list:dict = {
         "author"      : "NULL",
         "object"      : None,
     },
+    7 : {
+        "name"        : "랜덤 게임",
+        "ui"          : None,
+        "description" : "Lorem Ipsum",
+        "author"      : None,
+        "object"      : None,
+    }
 }

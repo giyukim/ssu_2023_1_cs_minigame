@@ -1,6 +1,10 @@
-from . import draw
-from . import input
-from .game import Game
+if __name__ == "__main__":
+    import draw, input
+    from game import Game
+else:
+    from . import draw
+    from . import input
+    from .game import Game
 
 def initial() -> Game:
     while True:
@@ -39,12 +43,21 @@ def initial() -> Game:
                 draw.error("올바른 명령어가 아닙니다")
         return Game(mode = menu_mode_selected, difficulty = menu_difficulty_selected, order = menu_order_selected)
 
+def start(game):
+    is_progress:bool = True
+    while is_progress:
+        draw.board(game)
+        if game.get_turn():
+            # O -> x -> O ...
+            board_x, board_y = input.game()
+
+
 def main():
     while True:
         game = initial()
         if game == 0:
             return 0
-        # TODO
+        start(game = game)
 
 if __name__ == "__main__":
     main()
