@@ -1,6 +1,6 @@
 from . import draw
-from . import input
+from . import interact
 from .game import Game
 from .main import *
 
-__all__ = ["draw", "input", "Game", "initial"]
+__all__ = ["draw", "interact", "Game", "initial"]

@@ -4,6 +4,7 @@ def board(game):
         print(f" 게임 정보 : 1p ({game.info_diff_str()})")
     else:
         print(" 게임 정보 : 2p")
+    print(" 종료 : quit")
     print('-' * 43)
     board_info = game.get_board_str()
     print("{0:^43}".format("|         |         |         |"))
