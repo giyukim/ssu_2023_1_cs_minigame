@@ -10,10 +10,10 @@ class Game():
             "author"      : game_list[self.game]["author"],
             "object"      : game_list[self.game]["object"],
         }
-        
+
     def info(self) -> dict:
         return self.game_info
     
     def start(self) -> object:
         from .__init__ import game_list
-        return game_list[self.game]["object"]
+        return game_list[self.game]["object"].main()

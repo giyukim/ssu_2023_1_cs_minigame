@@ -1,6 +1,6 @@
 from . import menu
-from .game import draw_shape as game
+from .get_ox import get_ox_user
 
 VERSION = 0.1
 
-__all__ = ["menu", "game"]
+__all__ = ["menu", "put_ox_user"]

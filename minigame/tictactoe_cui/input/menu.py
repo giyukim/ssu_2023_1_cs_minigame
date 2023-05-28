@@ -20,3 +20,10 @@ def ask_quit() -> typing.Optional[int]:
         return 0
     else:
         return 1
+    
+def ask_end() -> typing.Optional[int]:
+    try:
+        user_input = input("- 계속하시겠습니까 [ Any ] -> ")
+    except:
+        return None
+    return 1

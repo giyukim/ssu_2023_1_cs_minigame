@@ -5,7 +5,7 @@ def board(game):
     else:
         print(" 게임 정보 : 2p")
     print('-' * 43)
-    board_info = game.get_board()
+    board_info = game.get_board_str()
     print("{0:^43}".format("|         |         |         |"))
     print("{0:^43}".format("|{0:^9}|{1:^9}|{2:^9}|".format(board_info[0][0], board_info[0][1], board_info[0][2])))
     print("{0:^43}".format("|         |         |         |"))

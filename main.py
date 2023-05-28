@@ -22,7 +22,7 @@ def main() -> typing.Optional[typing.Any]:
                 continue
         game = minigame.Game(menu_selected)
         cui.draw.clear()
-        game.start().main()
+        game.start()
     
 if __name__ == "__main__":
     main()
