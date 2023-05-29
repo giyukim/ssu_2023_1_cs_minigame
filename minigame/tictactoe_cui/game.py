@@ -2,7 +2,7 @@ class Game():
     def __init__(self, mode:int, difficulty:int == None, order:int == None):
         self.mode:int = mode
         self.difficulty:int = difficulty
-        self.order:int = order
+        self.order:int = order # 1 -> O:1 / 2 -> X:0
         self.board = [
             [None, None, None],
             [None, None, None],
@@ -37,9 +37,9 @@ class Game():
         self.turn = not self.turn
 
     def put_ox(self, x:int, y:int):
-        if self.turn == True:
+        if self.turn == True: # O
             self.board[x][y] = 1
-        else:
+        else:                 # X
             self.board[x][y] = 0
 
 def initial() -> Game:
@@ -50,7 +50,7 @@ def initial() -> Game:
         menu_mode_selected = None
         while True:
             menu_mode_selected = interact.menu.main([1, 2, 3, 0])
-            if(not menu_mode_selected == None):
+            if not menu_mode_selected == None:
                 break
             else:
                 draw.error("올바른 명령어가 아닙니다")
@@ -65,24 +65,28 @@ def initial() -> Game:
         menu_difficulty_selected = None
         while menu_mode_selected == 1:
             menu_difficulty_selected = interact.menu.main([1, 2, 3, 0])
-            if(not menu_difficulty_selected == None):
+            if not menu_difficulty_selected == None:
                 break
             else:
                 draw.error("올바른 명령어가 아닙니다")
+        if menu_difficulty_selected == 0:
+            return 1
         draw.clear()
         draw.menu.select_1p_order(menu_difficulty_selected)
         menu_order_selected = None
         while menu_mode_selected == 1:
             menu_order_selected = interact.menu.main([1, 2, 0])
-            if(not menu_order_selected == None):
+            if not menu_order_selected == None:
                 break
             else:
                 draw.error("올바른 명령어가 아닙니다")
+        if menu_order_selected == 0:
+            return 1
         if menu_mode_selected == 2:
             menu_order_selected = 1
         return Game(mode = menu_mode_selected, difficulty = menu_difficulty_selected, order = menu_order_selected)
 
-def end_check(game):
+def end_check(game:Game):
     board = [[None, None, None], [None, None, None], [None, None, None]]
     for x in range(0, 3):
         for y in range(0, 3):
@@ -115,14 +119,76 @@ def end_check(game):
     return 0
 
 def ttt_algorithm(game:Game) -> tuple[int, int]:
+    user_shape = 1 if game.order == 1 else 0
+    bot_shape  = 0 if game.order == 1 else 1
+    board_empty:list = [(x, y) for x in range(0, 3) for y in range(0, 3) if game.board[x][y] == None]
     import random
     if game.difficulty == 1:
-        board_empty:list = [(x, y) for x in range(0, 3) for y in range(0, 3) if game.board[x][y] == None]
         return tuple(random.choice(board_empty))
-    elif game.difficulty == 2:
-        ...
-    elif game.difficulty == 3:
-        ...
+    else:
+        for i in range(0, 3):
+            if game.board[i] == [bot_shape, bot_shape, None]:
+                return (i, 2)
+            elif game.board[i] == [bot_shape, None, bot_shape]:
+                return (i, 1)
+            elif game.board[i] == [None, bot_shape, bot_shape]:
+                return (i, 0)
+            if game.board[0][i] == None and game.board[1][i] == bot_shape and game.board[2][i] == bot_shape:
+                return (0, i)
+            elif game.board[0][i] == bot_shape and game.board[1][i] == None and game.board[2][i] == bot_shape:
+                return (1, i)
+            elif game.board[0][i] == bot_shape and game.board[1][i] == bot_shape and game.board[2][i] == None:
+                return (2, i)
+        if game.board[0][0] == None and game.board[1][1] == bot_shape and game.board[2][2] == bot_shape:
+            return (0, 0)
+        elif game.board[0][0] == bot_shape and game.board[1][1] == None and game.board[2][2] == bot_shape:
+            return (1, 1)
+        elif game.board[0][0] == bot_shape and game.board[1][1] == bot_shape and game.board[2][2] == None:
+            return (2, 2)
+        elif game.board[0][2] == None and game.board[1][1] == bot_shape and game.board[2][0] == bot_shape:
+            return (0, 2)
+        elif game.board[0][2] == bot_shape and game.board[1][1] == None and game.board[2][0] == bot_shape:
+            return (1, 1)
+        elif game.board[0][2] == bot_shape and game.board[1][1] == bot_shape and game.board[2][0] == None:
+            return (2, 0)
+        for i in range(0, 3):
+            if game.board[i] == [user_shape, user_shape, None]:
+                return (i, 2)
+            elif game.board[i] == [user_shape, None, user_shape]:
+                return (i, 1)
+            elif game.board[i] == [None, user_shape, user_shape]:
+                return (i, 0)
+            if game.board[0][i] == None and game.board[1][i] == user_shape and game.board[2][i] == user_shape:
+                return (0, i)
+            elif game.board[0][i] == user_shape and game.board[1][i] == None and game.board[2][i] == user_shape:
+                return (1, i)
+            elif game.board[0][i] == user_shape and game.board[1][i] == user_shape and game.board[2][i] == None:
+                return (2, i)
+        if game.board[0][0] == None and game.board[1][1] == user_shape and game.board[2][2] == user_shape:
+            return (0, 0)
+        elif game.board[0][0] == user_shape and game.board[1][1] == None and game.board[2][2] == user_shape:
+            return (1, 1)
+        elif game.board[0][0] == user_shape and game.board[1][1] == user_shape and game.board[2][2] == None:
+            return (2, 2)
+        elif game.board[0][2] == None and game.board[1][1] == user_shape and game.board[2][0] == user_shape:
+            return (0, 2)
+        elif game.board[0][2] == user_shape and game.board[1][1] == None and game.board[2][0] == user_shape:
+            return (1, 1)
+        elif game.board[0][2] == user_shape and game.board[1][1] == user_shape and game.board[2][0] == None:
+            return (2, 0)
+        if game.difficulty == 3:
+            for i in range(0, 3):
+                if game.board[i][0] == user_shape and (i, 2) in board_empty:
+                    return (i, 2)
+                elif game.board[i][2] == user_shape and (i, 0) in board_empty:
+                    return(i, 0)
+                if game.board[0][i] == user_shape and (2, i) in board_empty:
+                    return (2, i)
+                elif game.board[2][i] == user_shape and (0, i) in board_empty:
+                    return (0, i)
+            if (1, 1) in board_empty:
+                return (1, 1)
+        return tuple(random.choice(board_empty))
 
 def progress(game:Game):
     from . import draw, interact

@@ -10,6 +10,8 @@ def main():
         game = initial()
         if game == 0:
             return 0
+        elif game == 1:
+            continue
         game_result = progress(game)
         if not game_result == None:
             draw.clear()
