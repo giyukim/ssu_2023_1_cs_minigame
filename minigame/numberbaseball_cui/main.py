@@ -6,7 +6,7 @@ def get_com_num() -> list:
 def get_user_num():
     nums:list = []
     while True:
-        user_input=input("3개의 숫자를 입력하세요. (0부터 9까지 중복없이) : ")
+        user_input=input("3개의 숫자를 입력하세요. (0부터 9까지 중복없이)\n  -> ")
         if user_input == "quit":
             return None
         try:
@@ -49,10 +49,13 @@ def start_game() -> None:
             print(f"{atp}번째 시도 : {stk} 스트라이크, {bal} 볼")
             if stk==3:
                 print("정답입니다.")
+                print('-' * 49)
                 break
+            print('-' * 49)
         else:
             print("주어진 시도를 모두 사용했습니다.")
             print(f"정답은 {com_num}입니다.")
+            print('-' * 49)
         if not draw.ask_retry():
             break
     return None
