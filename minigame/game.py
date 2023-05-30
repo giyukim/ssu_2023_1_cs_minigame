@@ -16,4 +16,6 @@ class Game():
     
     def start(self) -> object:
         from .__init__ import game_list
+        if game_list[self.game]["object"] == None:
+            return None
         return game_list[self.game]["object"].main()

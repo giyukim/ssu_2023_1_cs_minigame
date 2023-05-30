@@ -9,6 +9,7 @@ class Game():
             [None, None, None]
         ]
         self.turn:bool = True if self.order == 1 else False
+        self.result = None
 
     def info(self) -> dict:
         return {
@@ -33,16 +34,31 @@ class Game():
     def get_turn_str(self) -> str:
         return 'O' if self.turn == True else 'X'
     
+    def get_result(self):
+        return self.result
+    
+    def post_result(self, result):
+        self.result = result
+        return
+    
     def toggle_turn(self) -> None:
         self.turn = not self.turn
+        return
 
     def put_ox(self, x:int, y:int):
         if self.turn == True: # O
             self.board[x][y] = 1
         else:                 # X
             self.board[x][y] = 0
+    
+def print_help() -> None:
+        from .draw import help, clear
+        from .interact.menu import ask_end
+        clear()
+        help()
+        ask_end()
 
-def initial() -> Game:
+def initial():
     from . import draw, interact
     while True:
         draw.clear()
@@ -60,6 +76,8 @@ def initial() -> Game:
                 return 0
             else:
                 continue
+        if menu_mode_selected == 3:
+            return Game(mode = 3, difficulty = None, order = None)
         draw.clear()
         draw.menu.select_1p_difficulty()
         menu_difficulty_selected = None
@@ -186,6 +204,11 @@ def ttt_algorithm(game:Game) -> tuple[int, int]:
                     return (2, i)
                 elif game.board[2][i] == user_shape and (0, i) in board_empty:
                     return (0, i)
+            if len(board_empty) == 8 and game.board[1][1] == user_shape:
+                return tuple(random.choice([(0, 0), (2, 2), (0, 2), (2, 0)]))
+            if game.board[1][1] == bot_shape:
+                temp_list = [x for x in [(0, 0), (2, 2), (0, 2), (2, 0)] if x in board_empty]
+                return tuple(random.choice(temp_list))
             if (1, 1) in board_empty:
                 return (1, 1)
         return tuple(random.choice(board_empty))
@@ -219,4 +242,5 @@ def progress(game:Game):
                     game.toggle_turn()
                     break
                 draw.error("올바른 값을 입력해주세요")
-    return is_end
+    game.post_result(is_end)
+    return

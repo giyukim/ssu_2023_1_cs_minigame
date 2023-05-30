@@ -1,26 +1,20 @@
 if __name__ == "__main__":
-    import draw, interact
-    from game import initial, progress
+    import draw, game
 else:
-    from . import draw, interact
-    from .game import initial, progress
+    from . import draw, game
 
 def main():
     while True:
-        game = initial()
-        if game == 0:
+        game_object = game.initial()
+        if game_object == 0:
             return 0
-        elif game == 1:
+        elif game_object == 1:
             continue
-        game_result = progress(game)
-        if not game_result == None:
-            draw.clear()
-            draw.board(game)
-            if game_result == 1:
-                print(" 결과 : {} 우승".format(game.get_turn_str()))
-            elif game_result == -1:
-                print(" 결과 : 무승부")
-            interact.menu.ask_end()
+        elif game_object.mode == 3:
+            game.print_help()
+            continue
+        game.progress(game_object)
+        draw.result(game_object)
 
 if __name__ == "__main__":
     main()
