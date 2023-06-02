@@ -1,6 +1,7 @@
 from .game import *
 from . import tictactoe_cui as tictactoe
 from . import numberbaseball_cui as numberbaseball
+from . import oddandeven_cui as oddandeven
 
 VERSION = 0.1
 
@@ -11,14 +12,14 @@ game_list:dict = {
         "name"        : "홀수 짝수",
         "ui"          : 0,
         "description" : "Lorem Ipsum",
-        "author"      : "NULL",
-        "object"      : None,
+        "author"      : "LSH",
+        "object"      : oddandeven,
     },
     2 : {
         "name"        : "숫자 야구",
         "ui"          : 0,
         "description" : "Lorem Ipsum",
-        "author"      : "KNK",
+        "author"      : "KNG",
         "object"      : numberbaseball,
     },
     3 : {
@@ -43,13 +44,6 @@ game_list:dict = {
         "object"      : tictactoe,
     },
     6 : {
-        "name"        : "두더지 잡기",
-        "ui"          : 0,
-        "description" : "Lorem Ipsum",
-        "author"      : "NULL",
-        "object"      : None,
-    },
-    7 : {
         "name"        : "랜덤 게임",
         "ui"          : None,
         "description" : "Lorem Ipsum",

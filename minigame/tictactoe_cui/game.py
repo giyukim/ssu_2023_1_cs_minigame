@@ -206,9 +206,9 @@ def ttt_algorithm(game:Game) -> tuple[int, int]:
                     return (0, i)
             if len(board_empty) == 8 and game.board[1][1] == user_shape:
                 return tuple(random.choice([(0, 0), (2, 2), (0, 2), (2, 0)]))
-            if game.board[1][1] == bot_shape:
-                temp_list = [x for x in [(0, 0), (2, 2), (0, 2), (2, 0)] if x in board_empty]
-                return tuple(random.choice(temp_list))
+            empty_corner_list = [x for x in [(0, 0), (2, 2), (0, 2), (2, 0)] if x in board_empty]
+            if game.board[1][1] == bot_shape and len(empty_corner_list) != 0:
+                return tuple(random.choice(empty_corner_list))
             if (1, 1) in board_empty:
                 return (1, 1)
         return tuple(random.choice(board_empty))
