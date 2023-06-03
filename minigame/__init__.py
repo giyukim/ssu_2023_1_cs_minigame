@@ -2,10 +2,11 @@ from .game import *
 from . import tictactoe_cui as tictactoe
 from . import numberbaseball_cui as numberbaseball
 from . import oddandeven_cui as oddandeven
+from . import calculation_cui as calculation
 
 VERSION = 0.1
 
-__all__ = ["Game", "tictactoe", "game_list"]
+__all__ = ["Game", "tictactoe", "game_list", "calculation"]
 
 game_list:dict = {
     1 : {
@@ -26,8 +27,8 @@ game_list:dict = {
         "name"        : "사칙 연산 게임",
         "ui"          : 0,
         "description" : "Lorem Ipsum",
-        "author"      : "NULL",
-        "object"      : None,
+        "author"      : "KGU",
+        "object"      : calculation,
     },
     4 : {
         "name"        : "미니멈 원카드",
