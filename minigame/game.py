@@ -18,4 +18,6 @@ class Game():
         from .__init__ import game_list
         if game_list[self.game]["object"] == None:
             return None
+        if game_list[self.game]["ui"] == -1:
+            return game_list[self.game]["object"].main(game_list)
         return game_list[self.game]["object"].main()
