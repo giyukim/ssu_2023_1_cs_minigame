@@ -1,6 +1,6 @@
-def main(title:str, menus:dict) -> None:
+def main(menus:dict) -> None:
         ''' Draw Main Menu'''
-        print('-' * 15 + f" {title} " + '-' * 15)
+        print('-' * 15 + f" MINI GAME " + '-' * 15)
         for lst in sorted(menus.keys()): 
             print(" {}. {}".format(lst, menus[lst]["name"]))
         print(" 0. 종료")

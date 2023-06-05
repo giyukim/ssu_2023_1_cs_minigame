@@ -6,7 +6,7 @@ import minigame
 def main() -> typing.Optional[typing.Any]:
     while True:
         cui.draw.clear()
-        cui.draw.menu.main("MINI GAME", minigame.game_list)
+        cui.draw.menu.main(minigame.game_list)
         menu_selected = None
         while True:
             menu_selected = cui.interact.menu.main(minigame.game_list.keys())
