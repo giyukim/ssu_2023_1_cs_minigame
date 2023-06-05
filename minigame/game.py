@@ -1,4 +1,4 @@
-class Game():
+class Game():                                                                                                                   # 게임 객체 클래스
     def __init__(self, game_number):
         from .__init__ import game_list
         self.game = game_number
@@ -11,13 +11,13 @@ class Game():
             "object"      : game_list[self.game]["object"],
         }
 
-    def info(self) -> dict:
+    def info(self) -> dict:                                                                                                     # 게임 정보 반환 함수
         return self.game_info
     
-    def start(self) -> object:
-        from .__init__ import game_list
-        if game_list[self.game]["object"] == None:
+    def start(self) -> object:                                                                                                  # 게임 시작 함수
+        if self.game_info["object"] == None:
             return None
-        if game_list[self.game]["ui"] == -1:
-            return game_list[self.game]["object"].main(game_list)
-        return game_list[self.game]["object"].main()
+        if self.game_info["ui"] == -1:
+            from .__init__ import game_list
+            return self.game_info["object"].main(game_list)
+        return self.game_info["object"].main()

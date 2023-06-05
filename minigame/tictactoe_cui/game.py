@@ -58,10 +58,10 @@ def print_help() -> None:
         help()
         ask_end()
 
-def initial():
+def initial() -> Game:
     from . import draw, interact
     while True:
-        draw.clear()
+        draw.clear()                                                        # 게임 메인 화면
         draw.menu.main()
         menu_mode_selected = None
         while True:
@@ -78,7 +78,7 @@ def initial():
                 continue
         if menu_mode_selected == 3:
             return Game(mode = 3, difficulty = None, order = None)
-        draw.clear()
+        draw.clear()                                                        # 1P 모드 난이도 선택 화면
         draw.menu.select_1p_difficulty()
         menu_difficulty_selected = None
         while menu_mode_selected == 1:
@@ -89,7 +89,7 @@ def initial():
                 draw.error("올바른 명령어가 아닙니다")
         if menu_difficulty_selected == 0:
             return 1
-        draw.clear()
+        draw.clear()                                                        # 1P 모드 순서 선택 화면
         draw.menu.select_1p_order(menu_difficulty_selected)
         menu_order_selected = None
         while menu_mode_selected == 1:
@@ -102,9 +102,9 @@ def initial():
             return 1
         if menu_mode_selected == 2:
             menu_order_selected = 1
-        return Game(mode = menu_mode_selected, difficulty = menu_difficulty_selected, order = menu_order_selected)
+        return Game(mode = menu_mode_selected, difficulty = menu_difficulty_selected, order = menu_order_selected)  # 게임 객체 반환
 
-def end_check(game:Game):
+def end_check(game:Game):                                                   # 게임 종료 확인
     board = [[None, None, None], [None, None, None], [None, None, None]]
     for x in range(0, 3):
         for y in range(0, 3):
@@ -136,7 +136,7 @@ def end_check(game:Game):
         return -1
     return 0
 
-def ttt_algorithm(game:Game) -> tuple[int, int]:
+def ttt_algorithm(game:Game) -> tuple[int, int]:                            # 로봇 알고리즘 처리
     user_shape = 1 if game.order == 1 else 0
     bot_shape  = 0 if game.order == 1 else 1
     board_empty:list = [(x, y) for x in range(0, 3) for y in range(0, 3) if game.board[x][y] == None]
@@ -213,23 +213,23 @@ def ttt_algorithm(game:Game) -> tuple[int, int]:
                 return (1, 1)
         return tuple(random.choice(board_empty))
 
-def progress(game:Game):
+def progress(game:Game):                                                    # 게임 진행
     from . import draw, interact
     is_end = 0
     while is_end == 0:
-        is_end = end_check(game)
+        is_end = end_check(game)                                            # 게임 종료 여부 처리
         if not is_end == 0:
             game.toggle_turn()
             continue
         draw.clear()
-        draw.board(game)
-        if game.info()["mode"] == 1 and not game.get_turn():
+        draw.board(game)                                                    # 게임 화면 출력
+        if game.info()["mode"] == 1 and not game.get_turn():                # 자동화 로봇 처리
             board_x, board_y = ttt_algorithm(game)
             game.put_ox(board_x, board_y)
             game.toggle_turn()
         else:
             while True:
-                board_x, board_y = interact.get_ox_user(game)
+                board_x, board_y = interact.get_ox_user(game)               # 유저 입력 처리
                 if board_x == -1 and board_y == -1:
                     draw.clear()
                     if interact.menu.ask_quit():
