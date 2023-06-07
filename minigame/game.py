@@ -5,7 +5,7 @@ class Game():                                                                   
         self.game_info = {
             "no"          : self.game,
             "name"        : game_list[self.game]["name"],
-            "ui"          : None if game_list[self.game]["ui"] == None else "GUI" if game_list[self.game]["ui"] else "CUI",
+            "ui"          : None if game_list[self.game]["ui"] == None else "GUI" if game_list[self.game]["ui"] == 1 else "CUI" if game_list[self.game]["ui"] == 0 else "ELSE",
             "description" : game_list[self.game]["description"],
             "author"      : game_list[self.game]["author"],
             "object"      : game_list[self.game]["object"],
@@ -17,7 +17,7 @@ class Game():                                                                   
     def start(self) -> object:                                                                                                  # 게임 시작 함수
         if self.game_info["object"] == None:
             return None
-        if self.game_info["ui"] == -1:
+        if self.game_info["ui"] == "ELSE":
             from .__init__ import game_list
             return self.game_info["object"].main(game_list)
         return self.game_info["object"].main()
